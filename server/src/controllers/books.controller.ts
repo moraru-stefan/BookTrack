@@ -2,14 +2,30 @@ import type { RequestHandler } from 'express'
 import { z } from 'zod'
 import { ApiError } from '../lib/ApiError.js'
 import { getBookById, listBooks } from '../services/books.service.js'
+import { searchExternalBooks } from '../services/bookSearch.service.js'
 
 const idParamSchema = z.object({
   id: z.coerce.number().int().positive(),
 })
 
+const searchQuerySchema = z.object({
+  q: z.string().trim().min(1, 'Search query is required'),
+})
+
 export const index: RequestHandler = async (_request, response) => {
   const books = await listBooks()
   response.status(200).json({ success: true, data: books })
+}
+
+export const search: RequestHandler = async (request, response) => {
+  const parsedQuery = searchQuerySchema.safeParse(request.query)
+
+  if (!parsedQuery.success) {
+    throw new ApiError(400, parsedQuery.error.issues.map((issue) => issue.message).join(', '))
+  }
+
+  const results = await searchExternalBooks(parsedQuery.data.q)
+  response.status(200).json({ success: true, data: results })
 }
 
 export const show: RequestHandler = async (request, response) => {
