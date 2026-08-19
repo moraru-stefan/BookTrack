@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Spinner } from '../components/Spinner'
 import { useAuth } from '../contexts/useAuth'
 import { ApiError } from '../lib/api'
 
@@ -63,8 +64,9 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-2 cursor-pointer rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
+            className="mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
           >
+            {isSubmitting && <Spinner className="h-4 w-4" />}
             {isSubmitting ? 'Accesso in corso...' : 'Accedi'}
           </button>
         </form>

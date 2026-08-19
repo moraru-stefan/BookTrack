@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentType } from 'react'
 import { BookIcon, BookmarkIcon, CheckCircleIcon, ClockIcon, StarIcon } from '../components/icons'
+import { LoadingBlock } from '../components/Spinner'
 import { useAuth } from '../contexts/useAuth'
 import { getStatistics } from '../lib/library'
 import { statusLabels, type Statistics } from '../lib/types'
@@ -23,6 +24,8 @@ export function DashboardPage() {
       </div>
 
       {error && <p className="mt-6 text-sm text-red-500">{error}</p>}
+
+      {!statistics && !error && <LoadingBlock />}
 
       {statistics && (
         <>

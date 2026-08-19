@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { LibraryEntryCard } from '../components/LibraryEntryCard'
+import { LoadingBlock } from '../components/Spinner'
 import { deleteLibraryEntry, listFavorites, setFavorite, updateLibraryEntry } from '../lib/library'
 import type { LibraryEntry, ReadingStatus } from '../lib/types'
 
@@ -32,7 +33,7 @@ export function FavoritesPage() {
     <div>
       <h1 className="text-2xl font-bold text-slate-900">Preferiti</h1>
 
-      {isLoading && <p className="mt-4 text-sm text-slate-500">Caricamento...</p>}
+      {isLoading && <LoadingBlock />}
 
       {!isLoading && entries.length === 0 && (
         <p className="mt-4 text-sm text-slate-500">Nessun libro preferito ancora.</p>

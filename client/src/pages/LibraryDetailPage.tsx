@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ConfirmDialog } from '../components/ConfirmDialog'
+import { LoadingBlock, Spinner } from '../components/Spinner'
 import { ApiError } from '../lib/api'
 import {
   deleteLibraryEntry,
@@ -75,7 +76,7 @@ export function LibraryDetailPage() {
   }
 
   if (isLoading) {
-    return <p className="text-sm text-slate-500">Caricamento...</p>
+    return <LoadingBlock />
   }
 
   if (error || !entry) {
@@ -174,10 +175,11 @@ export function LibraryDetailPage() {
           type="button"
           onClick={() => void handleSaveReview()}
           disabled={isSaving}
-          className={`mt-2 w-full cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors active:scale-95 disabled:cursor-default disabled:opacity-60 sm:w-auto ${
+          className={`mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors active:scale-95 disabled:cursor-default disabled:opacity-60 sm:w-auto ${
             justSaved ? 'bg-emerald-600' : 'bg-emerald-500 hover:bg-emerald-600'
           }`}
         >
+          {isSaving && <Spinner className="h-4 w-4" />}
           {isSaving ? 'Salvataggio...' : justSaved ? 'Salvato ✓' : 'Salva recensione'}
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { ConfirmDialog } from './ConfirmDialog'
 import { useAuth } from '../contexts/useAuth'
@@ -15,6 +15,8 @@ export function AppLayout() {
   const { user, logout } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const lastScrollY = useRef(0)
 
   const initials = user?.name
     .split(' ')
@@ -36,10 +38,32 @@ export function AppLayout() {
     }
   }, [isMenuOpen])
 
+  useEffect(() => {
+    function handleScroll() {
+      const currentScrollY = window.scrollY
+      const scrolledPastThreshold = currentScrollY > 64
+
+      if (currentScrollY > lastScrollY.current && scrolledPastThreshold) {
+        setIsHeaderVisible(false)
+      } else {
+        setIsHeaderVisible(true)
+      }
+
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Barra superiore, visibile solo su mobile/tablet */}
-      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
+      {/* Barra superiore, visibile solo su mobile/tablet. Si nasconde scorrendo verso il basso, riappare scorrendo verso l'alto. */}
+      <header
+        className={`sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 transition-transform duration-300 ease-out md:hidden ${
+          isHeaderVisible || isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <p className="text-lg font-bold text-emerald-600">📚 BookTrack</p>
         <button
           type="button"

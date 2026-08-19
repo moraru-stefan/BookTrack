@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { LoadingBlock } from '../components/Spinner'
 import { getStatistics } from '../lib/library'
 import { statusLabels, type Statistics } from '../lib/types'
 
@@ -17,7 +18,7 @@ export function StatisticsPage() {
   }
 
   if (!statistics) {
-    return <p className="text-sm text-slate-500">Caricamento...</p>
+    return <LoadingBlock />
   }
 
   const breakdown = [

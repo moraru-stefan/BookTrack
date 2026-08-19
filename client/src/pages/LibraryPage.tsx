@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { LibraryEntryCard } from '../components/LibraryEntryCard'
+import { LoadingBlock, Spinner } from '../components/Spinner'
 import { ApiError } from '../lib/api'
 import {
   addToLibrary,
@@ -91,8 +92,9 @@ export function LibraryPage() {
         <button
           type="submit"
           disabled={isSearching}
-          className="cursor-pointer rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
         >
+          {isSearching && <Spinner className="h-4 w-4" />}
           {isSearching ? 'Cerco...' : 'Cerca'}
         </button>
       </form>
@@ -119,8 +121,9 @@ export function LibraryPage() {
                   type="button"
                   disabled={alreadyAdded || addingExternalId === book.external_id}
                   onClick={() => void handleAdd(book)}
-                  className="shrink-0 cursor-pointer rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors active:scale-95 hover:bg-slate-50 disabled:cursor-default disabled:opacity-50"
+                  className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors active:scale-95 hover:bg-slate-50 disabled:cursor-default disabled:opacity-50"
                 >
+                  {addingExternalId === book.external_id && <Spinner className="h-4 w-4" />}
                   {alreadyAdded
                     ? 'Già in libreria'
                     : addingExternalId === book.external_id
@@ -137,7 +140,7 @@ export function LibraryPage() {
         La tua libreria
       </h2>
 
-      {isLoadingLibrary && <p className="mt-4 text-sm text-slate-500">Caricamento...</p>}
+      {isLoadingLibrary && <LoadingBlock />}
 
       {!isLoadingLibrary && entries.length === 0 && (
         <p className="mt-4 text-sm text-slate-500">
