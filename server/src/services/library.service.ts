@@ -79,6 +79,14 @@ export async function listLibrary(userId: number): Promise<LibraryEntry[]> {
   return rows.map(mapRow)
 }
 
+export async function getRecentLibraryEntries(userId: number, limit: number): Promise<LibraryEntry[]> {
+  const [rows] = await pool.query<LibraryEntryRow[]>(
+    `${SELECT_LIBRARY_ENTRY} WHERE ub.user_id = ? ORDER BY ub.created_at DESC LIMIT ?`,
+    [userId, limit],
+  )
+  return rows.map(mapRow)
+}
+
 export async function listFavorites(userId: number): Promise<LibraryEntry[]> {
   const [rows] = await pool.query<LibraryEntryRow[]>(
     `${SELECT_LIBRARY_ENTRY} WHERE ub.user_id = ? AND ub.is_favorite = 1 ORDER BY ub.created_at DESC`,
