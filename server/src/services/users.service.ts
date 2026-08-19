@@ -41,7 +41,11 @@ export async function findUserById(id: number): Promise<PublicUser | null> {
   return row ? toPublicUser(row) : null
 }
 
-export async function createUser(name: string, email: string, password: string): Promise<PublicUser> {
+export async function createUser(
+  name: string,
+  email: string,
+  password: string,
+): Promise<PublicUser> {
   const passwordHash = await bcrypt.hash(password, 10)
 
   const [result] = await pool.query<ResultSetHeader>(

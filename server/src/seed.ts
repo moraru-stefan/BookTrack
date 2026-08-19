@@ -67,7 +67,8 @@ async function run() {
     externalId: 'seed-001',
     title: 'Dune',
     author: 'Frank Herbert',
-    description: 'A noble family becomes embroiled in a war for control of the desert planet Arrakis.',
+    description:
+      'A noble family becomes embroiled in a war for control of the desert planet Arrakis.',
     coverUrl: 'https://covers.openlibrary.org/b/isbn/9780441013593-L.jpg',
     isbn: '9780441013593',
     publishedDate: '1965',
@@ -78,7 +79,8 @@ async function run() {
     externalId: 'seed-002',
     title: 'The Midnight Library',
     author: 'Matt Haig',
-    description: 'Between life and death there is a library with infinite books of alternate lives.',
+    description:
+      'Between life and death there is a library with infinite books of alternate lives.',
     coverUrl: 'https://covers.openlibrary.org/b/isbn/9780525559474-L.jpg',
     isbn: '9780525559474',
     publishedDate: '2020',
@@ -89,7 +91,8 @@ async function run() {
     externalId: 'seed-003',
     title: 'Project Hail Mary',
     author: 'Andy Weir',
-    description: 'A lone astronaut must save humanity from extinction in this science fiction thriller.',
+    description:
+      'A lone astronaut must save humanity from extinction in this science fiction thriller.',
     coverUrl: 'https://covers.openlibrary.org/b/isbn/9780593135204-L.jpg',
     isbn: '9780593135204',
     publishedDate: '2021',
@@ -100,7 +103,8 @@ async function run() {
     externalId: 'seed-004',
     title: 'Atomic Habits',
     author: 'James Clear',
-    description: 'A guide to building good habits and breaking bad ones through small daily changes.',
+    description:
+      'A guide to building good habits and breaking bad ones through small daily changes.',
     coverUrl: 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg',
     isbn: '9780735211292',
     publishedDate: '2018',
@@ -111,7 +115,8 @@ async function run() {
     externalId: 'seed-005',
     title: 'Pride and Prejudice',
     author: 'Jane Austen',
-    description: 'A witty exploration of manners, marriage, and social standing in 19th-century England.',
+    description:
+      'A witty exploration of manners, marriage, and social standing in 19th-century England.',
     coverUrl: 'https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg',
     isbn: '9780141439518',
     publishedDate: '1813',

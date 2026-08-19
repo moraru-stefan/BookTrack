@@ -42,7 +42,9 @@ const updateSchema = z
     review: z.string().trim().max(2000).nullable().optional(),
     is_favorite: z.boolean().optional(),
   })
-  .refine((data) => Object.keys(data).length > 0, { message: 'At least one field must be provided' })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field must be provided',
+  })
 
 const favoriteSchema = z.object({
   is_favorite: z.boolean(),
@@ -101,7 +103,11 @@ export const update: RequestHandler = async (request, response) => {
     throw new ApiError(400, parsedBody.error.issues.map((issue) => issue.message).join(', '))
   }
 
-  const entry = await updateLibraryEntry(request.userId as number, parsedParams.data.id, parsedBody.data)
+  const entry = await updateLibraryEntry(
+    request.userId as number,
+    parsedParams.data.id,
+    parsedBody.data,
+  )
 
   if (!entry) {
     throw new ApiError(404, 'Library entry not found')
@@ -144,7 +150,11 @@ export const setFavoriteStatus: RequestHandler = async (request, response) => {
     throw new ApiError(400, 'is_favorite must be a boolean')
   }
 
-  const entry = await setFavorite(request.userId as number, parsedParams.data.id, parsedBody.data.is_favorite)
+  const entry = await setFavorite(
+    request.userId as number,
+    parsedParams.data.id,
+    parsedBody.data.is_favorite,
+  )
 
   if (!entry) {
     throw new ApiError(404, 'Library entry not found')

@@ -79,7 +79,10 @@ export async function listLibrary(userId: number): Promise<LibraryEntry[]> {
   return rows.map(mapRow)
 }
 
-export async function getRecentLibraryEntries(userId: number, limit: number): Promise<LibraryEntry[]> {
+export async function getRecentLibraryEntries(
+  userId: number,
+  limit: number,
+): Promise<LibraryEntry[]> {
   const [rows] = await pool.query<LibraryEntryRow[]>(
     `${SELECT_LIBRARY_ENTRY} WHERE ub.user_id = ? ORDER BY ub.created_at DESC LIMIT ?`,
     [userId, limit],
@@ -95,7 +98,10 @@ export async function listFavorites(userId: number): Promise<LibraryEntry[]> {
   return rows.map(mapRow)
 }
 
-export async function getLibraryEntry(userId: number, entryId: number): Promise<LibraryEntry | null> {
+export async function getLibraryEntry(
+  userId: number,
+  entryId: number,
+): Promise<LibraryEntry | null> {
   const [rows] = await pool.query<LibraryEntryRow[]>(
     `${SELECT_LIBRARY_ENTRY} WHERE ub.id = ? AND ub.user_id = ?`,
     [entryId, userId],
@@ -184,10 +190,10 @@ export async function updateLibraryEntry(
 }
 
 export async function deleteLibraryEntry(userId: number, entryId: number): Promise<boolean> {
-  const [result] = await pool.query<ResultSetHeader>('DELETE FROM user_books WHERE id = ? AND user_id = ?', [
-    entryId,
-    userId,
-  ])
+  const [result] = await pool.query<ResultSetHeader>(
+    'DELETE FROM user_books WHERE id = ? AND user_id = ?',
+    [entryId, userId],
+  )
   return result.affectedRows > 0
 }
 

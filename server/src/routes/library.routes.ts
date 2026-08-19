@@ -1,5 +1,12 @@
 import { Router } from 'express'
-import { create, index, remove, setFavoriteStatus, show, update } from '../controllers/library.controller.js'
+import {
+  create,
+  index,
+  remove,
+  setFavoriteStatus,
+  show,
+  update,
+} from '../controllers/library.controller.js'
 import { requireAuth } from '../middleware/requireAuth.js'
 
 export const libraryRouter = Router()

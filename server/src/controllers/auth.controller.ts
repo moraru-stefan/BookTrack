@@ -3,7 +3,12 @@ import { z } from 'zod'
 import { ApiError } from '../lib/ApiError.js'
 import { signToken } from '../lib/jwt.js'
 import { AUTH_COOKIE_NAME } from '../middleware/requireAuth.js'
-import { createUser, findUserByEmail, findUserById, verifyPassword } from '../services/users.service.js'
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+  verifyPassword,
+} from '../services/users.service.js'
 
 const COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000
 
