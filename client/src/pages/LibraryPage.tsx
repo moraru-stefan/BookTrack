@@ -77,7 +77,10 @@ export function LibraryPage() {
     <div>
       <h1 className="text-2xl font-bold text-slate-900">Libreria</h1>
 
-      <form onSubmit={(event) => void handleSearch(event)} className="mt-6 flex gap-2">
+      <form
+        onSubmit={(event) => void handleSearch(event)}
+        className="mt-6 flex flex-col gap-2 sm:flex-row"
+      >
         <input
           type="text"
           value={query}
@@ -88,7 +91,7 @@ export function LibraryPage() {
         <button
           type="submit"
           disabled={isSearching}
-          className="rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 disabled:opacity-60"
+          className="cursor-pointer rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
         >
           {isSearching ? 'Cerco...' : 'Cerca'}
         </button>
@@ -106,17 +109,17 @@ export function LibraryPage() {
             return (
               <div
                 key={book.external_id}
-                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
+                className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
               >
-                <div>
-                  <p className="font-medium text-slate-900">{book.title}</p>
-                  <p className="text-sm text-slate-500">{book.author}</p>
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-slate-900">{book.title}</p>
+                  <p className="truncate text-sm text-slate-500">{book.author}</p>
                 </div>
                 <button
                   type="button"
                   disabled={alreadyAdded || addingExternalId === book.external_id}
                   onClick={() => void handleAdd(book)}
-                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
+                  className="shrink-0 cursor-pointer rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors active:scale-95 hover:bg-slate-50 disabled:cursor-default disabled:opacity-50"
                 >
                   {alreadyAdded
                     ? 'Già in libreria'

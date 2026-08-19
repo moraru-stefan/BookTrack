@@ -61,26 +61,26 @@ export function DashboardPage() {
             {statistics.recent_books.map((entry) => (
               <li
                 key={entry.id}
-                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
+                className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex min-w-0 items-center gap-3">
                   {entry.book.cover_url ? (
                     <img
                       src={entry.book.cover_url}
                       alt={entry.book.title}
-                      className="h-12 w-9 rounded object-cover"
+                      className="h-12 w-9 shrink-0 rounded object-cover"
                     />
                   ) : (
-                    <div className="grid h-12 w-9 place-items-center rounded bg-slate-100 text-[8px] text-slate-400">
+                    <div className="grid h-12 w-9 shrink-0 place-items-center rounded bg-slate-100 text-[8px] text-slate-400">
                       N/D
                     </div>
                   )}
-                  <div>
-                    <p className="font-medium text-slate-900">{entry.book.title}</p>
-                    <p className="text-sm text-slate-500">{entry.book.author}</p>
+                  <div className="min-w-0">
+                    <p className="truncate font-medium text-slate-900">{entry.book.title}</p>
+                    <p className="truncate text-sm text-slate-500">{entry.book.author}</p>
                   </div>
                 </div>
-                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                <span className="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                   {statusLabels[entry.status]}
                 </span>
               </li>

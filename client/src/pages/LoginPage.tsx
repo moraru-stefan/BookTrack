@@ -63,7 +63,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-2 rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 disabled:opacity-60"
+            className="mt-2 cursor-pointer rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600 disabled:cursor-default disabled:opacity-60"
           >
             {isSubmitting ? 'Accesso in corso...' : 'Accedi'}
           </button>
@@ -71,7 +71,10 @@ export function LoginPage() {
 
         <p className="mt-6 text-sm text-slate-500">
           Non hai un account?{' '}
-          <Link to="/register" className="font-medium text-emerald-600 hover:underline">
+          <Link
+            to="/register"
+            className="font-medium text-emerald-600 transition-colors hover:text-emerald-700 hover:underline"
+          >
             Registrati
           </Link>
         </p>

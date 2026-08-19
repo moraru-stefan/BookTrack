@@ -71,13 +71,13 @@ export function StatisticsPage() {
         {statistics.recent_books.map((entry) => (
           <div
             key={entry.id}
-            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
+            className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
           >
-            <div>
-              <p className="font-medium text-slate-900">{entry.book.title}</p>
-              <p className="text-sm text-slate-500">{entry.book.author}</p>
+            <div className="min-w-0">
+              <p className="truncate font-medium text-slate-900">{entry.book.title}</p>
+              <p className="truncate text-sm text-slate-500">{entry.book.author}</p>
             </div>
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex shrink-0 items-center gap-3 text-sm">
               {entry.is_favorite && <span className="text-amber-400">★</span>}
               {entry.rating && <span className="text-slate-500">{entry.rating}/5</span>}
               <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
