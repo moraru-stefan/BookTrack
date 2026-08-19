@@ -1,10 +1,14 @@
 import 'dotenv/config'
+import cookieParser from 'cookie-parser'
 import express from 'express'
 import { errorHandler } from './middleware/errorHandler.js'
 import { apiRouter } from './routes/index.js'
 
 const app = express()
 const port = Number(process.env.PORT ?? 3000)
+
+app.use(express.json())
+app.use(cookieParser())
 
 app.use('/api', apiRouter)
 
