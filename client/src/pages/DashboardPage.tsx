@@ -1,31 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/useAuth'
-import { api } from '../lib/api'
-
-interface RecentBook {
-  id: number
-  status: 'TO_READ' | 'READING' | 'READ'
-  book: {
-    title: string
-    author: string | null
-  }
-}
-
-interface Statistics {
-  total: number
-  read: number
-  reading: number
-  to_read: number
-  favorites: number
-  average_rating: number | null
-  recent_books: RecentBook[]
-}
-
-const statusLabels: Record<RecentBook['status'], string> = {
-  TO_READ: 'Da leggere',
-  READING: 'In lettura',
-  READ: 'Letto',
-}
+import { getStatistics } from '../lib/library'
+import { statusLabels, type Statistics } from '../lib/types'
 
 export function DashboardPage() {
   const { user } = useAuth()
@@ -33,8 +9,7 @@ export function DashboardPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    api
-      .get<Statistics>('/statistics')
+    getStatistics()
       .then(setStatistics)
       .catch(() => setError('Impossibile caricare le statistiche'))
   }, [])
