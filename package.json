@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm --prefix client run dev"
+    "dev": "npm --prefix client run dev",
+    "lint": "npm --prefix client run lint && npm --prefix server run lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
   }
 }

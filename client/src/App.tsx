@@ -9,8 +9,8 @@ function App() {
           Frontend ready.
         </h1>
         <p className="mt-4 text-lg leading-8 text-slate-300">
-          React, TypeScript, Vite, and Tailwind CSS are configured and ready
-          for the first BookTrack feature.
+          React, TypeScript, Vite, and Tailwind CSS are configured and ready for the first BookTrack
+          feature.
         </p>
       </section>
     </main>
