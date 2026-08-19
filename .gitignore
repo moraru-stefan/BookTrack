@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+coverage/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local databases and Prisma artefacts
+*.db
+*.db-journal
+prisma/dev.db
+
+# Editor and operating-system files
+.DS_Store
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# TypeScript incremental build data
+*.tsbuildinfo
+
+# Personal project notes (kept locally)
+*.md
