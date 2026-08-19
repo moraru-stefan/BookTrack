@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ComponentType } from 'react'
+import { BookIcon, BookmarkIcon, CheckCircleIcon, ClockIcon, StarIcon } from '../components/icons'
 import { useAuth } from '../contexts/useAuth'
 import { getStatistics } from '../lib/library'
 import { statusLabels, type Statistics } from '../lib/types'
@@ -16,29 +17,43 @@ export function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Ciao, {user?.name}</h1>
-      <p className="mt-1 text-slate-400">Ecco un riepilogo della tua libreria.</p>
+      <div className="rounded-2xl bg-linear-to-br from-emerald-500 to-emerald-600 p-8 text-white shadow-sm">
+        <h1 className="text-2xl font-bold">Ciao, {user?.name} 👋</h1>
+        <p className="mt-1 text-emerald-50">Ecco un riepilogo della tua libreria.</p>
+      </div>
 
-      {error && <p className="mt-6 text-sm text-red-400">{error}</p>}
+      {error && <p className="mt-6 text-sm text-red-500">{error}</p>}
 
       {statistics && (
         <>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
-            <StatCard label="Totale" value={statistics.total} />
-            <StatCard label="Letti" value={statistics.read} />
-            <StatCard label="In lettura" value={statistics.reading} />
-            <StatCard label="Da leggere" value={statistics.to_read} />
-            <StatCard label="Preferiti" value={statistics.favorites} />
+            <StatCard icon={BookIcon} label="Totale" value={statistics.total} color="slate" />
+            <StatCard
+              icon={CheckCircleIcon}
+              label="Letti"
+              value={statistics.read}
+              color="emerald"
+            />
+            <StatCard icon={ClockIcon} label="In lettura" value={statistics.reading} color="sky" />
+            <StatCard
+              icon={BookmarkIcon}
+              label="Da leggere"
+              value={statistics.to_read}
+              color="amber"
+            />
+            <StatCard icon={StarIcon} label="Preferiti" value={statistics.favorites} color="rose" />
           </div>
 
-          <p className="mt-4 text-sm text-slate-400">
-            Voto medio:{' '}
-            <span className="font-semibold text-slate-100">
-              {statistics.average_rating ?? 'nessun voto'}
-            </span>
-          </p>
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm text-slate-500">
+              Voto medio:{' '}
+              <span className="font-semibold text-slate-900">
+                {statistics.average_rating ?? 'nessun voto'}
+              </span>
+            </p>
+          </div>
 
-          <h2 className="mt-8 text-lg font-semibold text-white">Aggiunti di recente</h2>
+          <h2 className="mt-8 text-lg font-semibold text-slate-900">Aggiunti di recente</h2>
           <ul className="mt-4 flex flex-col gap-2">
             {statistics.recent_books.length === 0 && (
               <li className="text-sm text-slate-500">Nessun libro nella libreria ancora.</li>
@@ -46,13 +61,26 @@ export function DashboardPage() {
             {statistics.recent_books.map((entry) => (
               <li
                 key={entry.id}
-                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900 px-4 py-3"
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
               >
-                <div>
-                  <p className="font-medium text-slate-100">{entry.book.title}</p>
-                  <p className="text-sm text-slate-400">{entry.book.author}</p>
+                <div className="flex items-center gap-3">
+                  {entry.book.cover_url ? (
+                    <img
+                      src={entry.book.cover_url}
+                      alt={entry.book.title}
+                      className="h-12 w-9 rounded object-cover"
+                    />
+                  ) : (
+                    <div className="grid h-12 w-9 place-items-center rounded bg-slate-100 text-[8px] text-slate-400">
+                      N/D
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-medium text-slate-900">{entry.book.title}</p>
+                    <p className="text-sm text-slate-500">{entry.book.author}</p>
+                  </div>
                 </div>
-                <span className="text-xs font-medium text-emerald-400">
+                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
                   {statusLabels[entry.status]}
                 </span>
               </li>
@@ -64,11 +92,32 @@ export function DashboardPage() {
   )
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+const colorClasses = {
+  slate: 'bg-slate-100 text-slate-600',
+  emerald: 'bg-emerald-100 text-emerald-600',
+  sky: 'bg-sky-100 text-sky-600',
+  amber: 'bg-amber-100 text-amber-600',
+  rose: 'bg-rose-100 text-rose-600',
+} as const
+
+function StatCard({
+  icon: IconComponent,
+  label,
+  value,
+  color,
+}: {
+  icon: ComponentType<{ className?: string }>
+  label: string
+  value: number
+  color: keyof typeof colorClasses
+}) {
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900 p-4">
-      <p className="text-2xl font-bold text-white">{value}</p>
-      <p className="text-sm text-slate-400">{label}</p>
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className={`grid h-9 w-9 place-items-center rounded-lg ${colorClasses[color]}`}>
+        <IconComponent className="h-5 w-5" />
+      </div>
+      <p className="mt-3 text-2xl font-bold text-slate-900">{value}</p>
+      <p className="text-sm text-slate-500">{label}</p>
     </div>
   )
 }

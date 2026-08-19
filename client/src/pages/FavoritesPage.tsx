@@ -30,7 +30,7 @@ export function FavoritesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Preferiti</h1>
+      <h1 className="text-2xl font-bold text-slate-900">Preferiti</h1>
 
       {isLoading && <p className="mt-4 text-sm text-slate-500">Caricamento...</p>}
 

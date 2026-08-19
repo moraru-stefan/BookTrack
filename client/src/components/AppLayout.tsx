@@ -12,12 +12,19 @@ const navItems = [
 export function AppLayout() {
   const { user, logout } = useAuth()
 
+  const initials = user?.name
+    .split(' ')
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-slate-50">
       <div className="mx-auto flex min-h-screen max-w-6xl">
-        <aside className="flex w-56 shrink-0 flex-col justify-between border-r border-slate-800 p-6">
+        <aside className="flex w-60 shrink-0 flex-col justify-between border-r border-slate-200 bg-white p-6">
           <div>
-            <p className="text-lg font-bold text-emerald-400">BookTrack</p>
+            <p className="text-lg font-bold text-emerald-600">📚 BookTrack</p>
             <nav className="mt-8 flex flex-col gap-1">
               {navItems.map((item) => (
                 <NavLink
@@ -27,8 +34,8 @@ export function AppLayout() {
                   className={({ isActive }) =>
                     `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'bg-emerald-500/10 text-emerald-400'
-                        : 'text-slate-400 hover:bg-slate-900 hover:text-slate-100'
+                        ? 'bg-emerald-50 text-emerald-700'
+                        : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'
                     }`
                   }
                 >
@@ -37,15 +44,20 @@ export function AppLayout() {
               ))}
             </nav>
           </div>
-          <div>
-            <p className="truncate text-sm text-slate-400">{user?.name}</p>
-            <button
-              type="button"
-              onClick={() => void logout()}
-              className="mt-2 text-sm font-medium text-slate-400 hover:text-red-400"
-            >
-              Esci
-            </button>
+          <div className="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-100 text-sm font-semibold text-emerald-700">
+              {initials}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-slate-900">{user?.name}</p>
+              <button
+                type="button"
+                onClick={() => void logout()}
+                className="text-xs font-medium text-slate-400 hover:text-red-500"
+              >
+                Esci
+              </button>
+            </div>
           </div>
         </aside>
         <main className="flex-1 p-8">

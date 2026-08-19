@@ -75,7 +75,7 @@ export function LibraryPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white">Libreria</h1>
+      <h1 className="text-2xl font-bold text-slate-900">Libreria</h1>
 
       <form onSubmit={(event) => void handleSearch(event)} className="mt-6 flex gap-2">
         <input
@@ -83,38 +83,40 @@ export function LibraryPage() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Cerca un libro per titolo..."
-          className="flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none focus:border-emerald-500"
+          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 shadow-sm outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         />
         <button
           type="submit"
           disabled={isSearching}
-          className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-60"
+          className="rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 disabled:opacity-60"
         >
           {isSearching ? 'Cerco...' : 'Cerca'}
         </button>
       </form>
 
-      {searchError && <p className="mt-2 text-sm text-red-400">{searchError}</p>}
+      {searchError && <p className="mt-2 text-sm text-red-500">{searchError}</p>}
 
       {results.length > 0 && (
         <div className="mt-4 flex flex-col gap-2">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase">Risultati ricerca</h2>
+          <h2 className="text-sm font-semibold tracking-wide text-slate-400 uppercase">
+            Risultati ricerca
+          </h2>
           {results.map((book) => {
             const alreadyAdded = libraryExternalIds.has(book.external_id)
             return (
               <div
                 key={book.external_id}
-                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900 px-4 py-3"
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
               >
                 <div>
-                  <p className="font-medium text-slate-100">{book.title}</p>
-                  <p className="text-sm text-slate-400">{book.author}</p>
+                  <p className="font-medium text-slate-900">{book.title}</p>
+                  <p className="text-sm text-slate-500">{book.author}</p>
                 </div>
                 <button
                   type="button"
                   disabled={alreadyAdded || addingExternalId === book.external_id}
                   onClick={() => void handleAdd(book)}
-                  className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-100 hover:bg-slate-800 disabled:opacity-50"
+                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
                 >
                   {alreadyAdded
                     ? 'Già in libreria'
@@ -128,7 +130,9 @@ export function LibraryPage() {
         </div>
       )}
 
-      <h2 className="mt-8 text-sm font-semibold text-slate-400 uppercase">La tua libreria</h2>
+      <h2 className="mt-8 text-sm font-semibold tracking-wide text-slate-400 uppercase">
+        La tua libreria
+      </h2>
 
       {isLoadingLibrary && <p className="mt-4 text-sm text-slate-500">Caricamento...</p>}
 

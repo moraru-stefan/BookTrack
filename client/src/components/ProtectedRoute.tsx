@@ -7,7 +7,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="grid min-h-screen place-items-center bg-slate-950 text-slate-100">
+      <div className="grid min-h-screen place-items-center bg-slate-50 text-slate-500">
         Caricamento...
       </div>
     )
