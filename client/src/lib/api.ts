@@ -38,7 +38,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (!response.ok || !body || !body.success) {
     throw new ApiError(
       response.status,
-      body && !body.success ? body.message : 'Something went wrong',
+      body && !body.success ? body.message : 'Qualcosa è andato storto',
     )
   }
 

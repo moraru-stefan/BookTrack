@@ -16,7 +16,7 @@ app.use(cookieParser())
 app.use('/api', apiRouter)
 
 app.use((_request, response) => {
-  response.status(404).json({ success: false, message: 'Not found' })
+  response.status(404).json({ success: false, message: 'Risorsa non trovata' })
 })
 
 app.use(errorHandler)

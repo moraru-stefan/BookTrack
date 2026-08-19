@@ -8,5 +8,5 @@ export const errorHandler: ErrorRequestHandler = (error, _request, response, _ne
   }
 
   console.error(error)
-  response.status(500).json({ success: false, message: 'Internal server error' })
+  response.status(500).json({ success: false, message: 'Errore interno del server' })
 }

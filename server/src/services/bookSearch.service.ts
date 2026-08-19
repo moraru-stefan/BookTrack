@@ -37,11 +37,11 @@ export async function searchExternalBooks(query: string): Promise<BookSearchResu
   try {
     response = await fetch(url)
   } catch {
-    throw new ApiError(502, 'Book search is currently unavailable')
+    throw new ApiError(502, 'La ricerca libri non è al momento disponibile')
   }
 
   if (!response.ok) {
-    throw new ApiError(502, 'Book search is currently unavailable')
+    throw new ApiError(502, 'La ricerca libri non è al momento disponibile')
   }
 
   const data = (await response.json()) as OpenLibraryResponse

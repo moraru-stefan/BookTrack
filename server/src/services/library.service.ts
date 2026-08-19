@@ -135,7 +135,7 @@ export async function addToLibrary(
     return created
   } catch (error) {
     if ((error as { code?: string }).code === 'ER_DUP_ENTRY') {
-      throw new ApiError(409, 'This book is already in your library')
+      throw new ApiError(409, 'Questo libro è già nella tua libreria')
     }
     throw error
   }

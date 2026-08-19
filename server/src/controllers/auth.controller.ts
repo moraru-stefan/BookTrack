@@ -13,14 +13,21 @@ import {
 const COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000
 
 const registerSchema = z.object({
-  name: z.string().trim().min(1).max(100),
-  email: z.string().trim().toLowerCase().email(),
-  password: z.string().min(8).max(72),
+  name: z
+    .string()
+    .trim()
+    .min(1, 'Il nome è obbligatorio')
+    .max(100, 'Il nome non può superare i 100 caratteri'),
+  email: z.string().trim().toLowerCase().email('Inserisci un indirizzo email valido'),
+  password: z
+    .string()
+    .min(8, 'La password deve avere almeno 8 caratteri')
+    .max(72, 'La password non può superare i 72 caratteri'),
 })
 
 const loginSchema = z.object({
-  email: z.string().trim().toLowerCase().email(),
-  password: z.string().min(1),
+  email: z.string().trim().toLowerCase().email('Inserisci un indirizzo email valido'),
+  password: z.string().min(1, 'Inserisci la password'),
 })
 
 function setAuthCookie(response: Response, token: string) {
@@ -43,7 +50,7 @@ export const register: RequestHandler = async (request, response) => {
 
   const existing = await findUserByEmail(email)
   if (existing) {
-    throw new ApiError(409, 'Email already registered')
+    throw new ApiError(409, 'Email già registrata')
   }
 
   const user = await createUser(name, email, password)
@@ -64,7 +71,7 @@ export const login: RequestHandler = async (request, response) => {
 
   const user = await verifyPassword(email, password)
   if (!user) {
-    throw new ApiError(401, 'Invalid email or password')
+    throw new ApiError(401, 'Email o password non corretti')
   }
 
   const token = signToken(user.id)
@@ -75,14 +82,14 @@ export const login: RequestHandler = async (request, response) => {
 
 export const logout: RequestHandler = (_request, response) => {
   response.clearCookie(AUTH_COOKIE_NAME)
-  response.status(200).json({ success: true, message: 'Logged out' })
+  response.status(200).json({ success: true, message: 'Disconnessione effettuata' })
 }
 
 export const me: RequestHandler = async (request, response) => {
   const user = await findUserById(request.userId as number)
 
   if (!user) {
-    throw new ApiError(401, 'Authentication required')
+    throw new ApiError(401, 'Autenticazione richiesta')
   }
 
   response.status(200).json({ success: true, data: user })

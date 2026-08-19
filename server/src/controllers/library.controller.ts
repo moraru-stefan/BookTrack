@@ -17,8 +17,8 @@ const idParamSchema = z.object({
 })
 
 const bookInputSchema = z.object({
-  external_id: z.string().trim().min(1),
-  title: z.string().trim().min(1),
+  external_id: z.string().trim().min(1, "L'id esterno del libro è obbligatorio"),
+  title: z.string().trim().min(1, 'Il titolo del libro è obbligatorio'),
   author: z.string().trim().nullable().optional(),
   description: z.string().trim().nullable().optional(),
   cover_url: z.string().trim().nullable().optional(),
@@ -30,20 +30,42 @@ const bookInputSchema = z.object({
 const createSchema = z.object({
   book: bookInputSchema,
   status: z.enum(['TO_READ', 'READING', 'READ']).default('TO_READ'),
-  rating: z.number().int().min(1).max(5).nullable().optional(),
-  review: z.string().trim().max(2000).nullable().optional(),
+  rating: z
+    .number()
+    .int()
+    .min(1, 'Il voto deve essere compreso tra 1 e 5')
+    .max(5, 'Il voto deve essere compreso tra 1 e 5')
+    .nullable()
+    .optional(),
+  review: z
+    .string()
+    .trim()
+    .max(2000, 'La recensione non può superare i 2000 caratteri')
+    .nullable()
+    .optional(),
   is_favorite: z.boolean().optional().default(false),
 })
 
 const updateSchema = z
   .object({
     status: z.enum(['TO_READ', 'READING', 'READ']).optional(),
-    rating: z.number().int().min(1).max(5).nullable().optional(),
-    review: z.string().trim().max(2000).nullable().optional(),
+    rating: z
+      .number()
+      .int()
+      .min(1, 'Il voto deve essere compreso tra 1 e 5')
+      .max(5, 'Il voto deve essere compreso tra 1 e 5')
+      .nullable()
+      .optional(),
+    review: z
+      .string()
+      .trim()
+      .max(2000, 'La recensione non può superare i 2000 caratteri')
+      .nullable()
+      .optional(),
     is_favorite: z.boolean().optional(),
   })
   .refine((data) => Object.keys(data).length > 0, {
-    message: 'At least one field must be provided',
+    message: 'Specifica almeno un campo da aggiornare',
   })
 
 const favoriteSchema = z.object({
@@ -78,13 +100,13 @@ export const show: RequestHandler = async (request, response) => {
   const parsedParams = idParamSchema.safeParse(request.params)
 
   if (!parsedParams.success) {
-    throw new ApiError(400, 'Library entry id must be a positive integer')
+    throw new ApiError(400, "L'id della voce libreria deve essere un numero intero positivo")
   }
 
   const entry = await getLibraryEntry(request.userId as number, parsedParams.data.id)
 
   if (!entry) {
-    throw new ApiError(404, 'Library entry not found')
+    throw new ApiError(404, 'Voce non trovata nella libreria')
   }
 
   response.status(200).json({ success: true, data: entry })
@@ -94,7 +116,7 @@ export const update: RequestHandler = async (request, response) => {
   const parsedParams = idParamSchema.safeParse(request.params)
 
   if (!parsedParams.success) {
-    throw new ApiError(400, 'Library entry id must be a positive integer')
+    throw new ApiError(400, "L'id della voce libreria deve essere un numero intero positivo")
   }
 
   const parsedBody = updateSchema.safeParse(request.body)
@@ -110,7 +132,7 @@ export const update: RequestHandler = async (request, response) => {
   )
 
   if (!entry) {
-    throw new ApiError(404, 'Library entry not found')
+    throw new ApiError(404, 'Voce non trovata nella libreria')
   }
 
   response.status(200).json({ success: true, data: entry })
@@ -120,13 +142,13 @@ export const remove: RequestHandler = async (request, response) => {
   const parsedParams = idParamSchema.safeParse(request.params)
 
   if (!parsedParams.success) {
-    throw new ApiError(400, 'Library entry id must be a positive integer')
+    throw new ApiError(400, "L'id della voce libreria deve essere un numero intero positivo")
   }
 
   const deleted = await deleteLibraryEntry(request.userId as number, parsedParams.data.id)
 
   if (!deleted) {
-    throw new ApiError(404, 'Library entry not found')
+    throw new ApiError(404, 'Voce non trovata nella libreria')
   }
 
   response.status(204).send()
@@ -141,13 +163,13 @@ export const setFavoriteStatus: RequestHandler = async (request, response) => {
   const parsedParams = idParamSchema.safeParse(request.params)
 
   if (!parsedParams.success) {
-    throw new ApiError(400, 'Library entry id must be a positive integer')
+    throw new ApiError(400, "L'id della voce libreria deve essere un numero intero positivo")
   }
 
   const parsedBody = favoriteSchema.safeParse(request.body)
 
   if (!parsedBody.success) {
-    throw new ApiError(400, 'is_favorite must be a boolean')
+    throw new ApiError(400, "'is_favorite' deve essere un valore booleano")
   }
 
   const entry = await setFavorite(
@@ -157,7 +179,7 @@ export const setFavoriteStatus: RequestHandler = async (request, response) => {
   )
 
   if (!entry) {
-    throw new ApiError(404, 'Library entry not found')
+    throw new ApiError(404, 'Voce non trovata nella libreria')
   }
 
   response.status(200).json({ success: true, data: entry })

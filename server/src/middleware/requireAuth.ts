@@ -16,7 +16,7 @@ export const requireAuth: RequestHandler = (request, _response, next) => {
   const token = request.cookies?.[AUTH_COOKIE_NAME]
 
   if (!token) {
-    throw new ApiError(401, 'Authentication required')
+    throw new ApiError(401, 'Autenticazione richiesta')
   }
 
   try {
@@ -24,6 +24,6 @@ export const requireAuth: RequestHandler = (request, _response, next) => {
     request.userId = payload.userId
     next()
   } catch {
-    throw new ApiError(401, 'Invalid or expired session')
+    throw new ApiError(401, 'Sessione non valida o scaduta')
   }
 }

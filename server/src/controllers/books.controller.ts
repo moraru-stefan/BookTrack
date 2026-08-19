@@ -9,7 +9,7 @@ const idParamSchema = z.object({
 })
 
 const searchQuerySchema = z.object({
-  q: z.string().trim().min(1, 'Search query is required'),
+  q: z.string().trim().min(1, 'Inserisci un termine di ricerca'),
 })
 
 export const index: RequestHandler = async (_request, response) => {
@@ -32,13 +32,13 @@ export const show: RequestHandler = async (request, response) => {
   const parsedParams = idParamSchema.safeParse(request.params)
 
   if (!parsedParams.success) {
-    throw new ApiError(400, 'Book id must be a positive integer')
+    throw new ApiError(400, "L'id del libro deve essere un numero intero positivo")
   }
 
   const book = await getBookById(parsedParams.data.id)
 
   if (!book) {
-    throw new ApiError(404, 'Book not found')
+    throw new ApiError(404, 'Libro non trovato')
   }
 
   response.status(200).json({ success: true, data: book })
