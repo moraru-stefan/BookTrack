@@ -1,1 +1,11 @@
 @import 'tailwindcss';
+
+/* Contenitore largo e centrato per le pagine dell'app: usa quasi tutto lo
+   schermo su desktop, ma resta leggibile sui monitor molto larghi.
+   Scritta fuori da @layer così vince sempre sull'utility "container"
+   predefinita di Tailwind, senza dipendere dall'ordine delle regole. */
+.container {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+}
