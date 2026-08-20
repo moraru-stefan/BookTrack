@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { ConfirmDialog } from './ConfirmDialog'
 import { useAuth } from '../contexts/useAuth'
 
@@ -13,6 +13,7 @@ const navItems = [
 
 export function AppLayout() {
   const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
@@ -25,9 +26,10 @@ export function AppLayout() {
     .join('')
     .toUpperCase()
 
-  function handleConfirmLogout() {
+  async function handleConfirmLogout() {
     setShowLogoutConfirm(false)
-    void logout()
+    await logout()
+    navigate('/')
   }
 
   useEffect(() => {
