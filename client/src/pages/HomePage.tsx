@@ -36,7 +36,7 @@ export function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="flex min-h-screen flex-col bg-slate-50">
       <header className="border-b border-slate-200 bg-white">
         <div className="container flex items-center justify-between px-6 py-4">
           <p className="text-lg font-bold text-emerald-600">📚 BookTrack</p>
@@ -59,7 +59,7 @@ export function HomePage() {
         </div>
       </header>
 
-      <main className="container flex flex-col items-center px-6 py-20 text-center sm:py-28">
+      <section className="container flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
         <p className="text-sm font-semibold tracking-[0.2em] text-emerald-600 uppercase">
           La tua libreria personale
         </p>
@@ -70,8 +70,10 @@ export function HomePage() {
           Cerca libri, gestisci la tua libreria personale, segna lo stato di lettura e scopri le tue
           statistiche di lettura.
         </p>
+      </section>
 
-        <div className="mt-16 grid w-full gap-6 sm:grid-cols-3">
+      <section className="container px-6 pb-20">
+        <div className="grid gap-6 sm:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
@@ -85,7 +87,7 @@ export function HomePage() {
             </div>
           ))}
         </div>
-      </main>
+      </section>
 
       <AuthModal open={authMode !== null} onClose={() => setAuthMode(null)}>
         {authMode === 'login' && (
