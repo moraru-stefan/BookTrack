@@ -28,8 +28,8 @@ export function AppLayout() {
 
   async function handleConfirmLogout() {
     setShowLogoutConfirm(false)
-    await logout()
     navigate('/')
+    await logout()
   }
 
   useEffect(() => {
