@@ -24,7 +24,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="container flex items-center justify-between px-6 py-4">
           <p className="text-lg font-bold text-emerald-600">📚 BookTrack</p>
           <nav className="flex items-center gap-3">
             <Link
@@ -43,7 +43,7 @@ export function HomePage() {
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-6xl flex-col items-center px-6 py-20 text-center sm:py-28">
+      <main className="container flex flex-col items-center px-6 py-20 text-center sm:py-28">
         <p className="text-sm font-semibold tracking-[0.2em] text-emerald-600 uppercase">
           La tua libreria personale
         </p>
@@ -54,22 +54,8 @@ export function HomePage() {
           Cerca libri, gestisci la tua libreria personale, segna lo stato di lettura e scopri le tue
           statistiche di lettura.
         </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/register"
-            className="cursor-pointer rounded-xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600"
-          >
-            Inizia ora
-          </Link>
-          <Link
-            to="/login"
-            className="cursor-pointer rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-colors active:scale-95 hover:bg-slate-50"
-          >
-            Accedi
-          </Link>
-        </div>
 
-        <div className="mt-24 grid w-full gap-6 sm:grid-cols-3">
+        <div className="mt-16 grid w-full gap-6 sm:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
