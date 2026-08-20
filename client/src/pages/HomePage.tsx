@@ -1,5 +1,9 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthModal } from '../components/AuthModal'
 import { BookIcon, ClockIcon, StarIcon } from '../components/icons'
+import { LoginForm } from '../components/LoginForm'
+import { RegisterForm } from '../components/RegisterForm'
 
 const features = [
   {
@@ -20,25 +24,37 @@ const features = [
   },
 ]
 
+type AuthMode = 'login' | 'register' | null
+
 export function HomePage() {
+  const navigate = useNavigate()
+  const [authMode, setAuthMode] = useState<AuthMode>(null)
+
+  function handleAuthSuccess() {
+    setAuthMode(null)
+    navigate('/app')
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="border-b border-slate-200 bg-white">
         <div className="container flex items-center justify-between px-6 py-4">
           <p className="text-lg font-bold text-emerald-600">📚 BookTrack</p>
           <nav className="flex items-center gap-3">
-            <Link
-              to="/login"
-              className="text-sm font-semibold text-slate-700 transition-colors hover:text-emerald-600"
+            <button
+              type="button"
+              onClick={() => setAuthMode('login')}
+              className="cursor-pointer text-sm font-semibold text-slate-700 transition-colors hover:text-emerald-600"
             >
               Accedi
-            </Link>
-            <Link
-              to="/register"
+            </button>
+            <button
+              type="button"
+              onClick={() => setAuthMode('register')}
               className="cursor-pointer rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors active:scale-95 hover:bg-emerald-600"
             >
               Registrati
-            </Link>
+            </button>
           </nav>
         </div>
       </header>
@@ -70,6 +86,37 @@ export function HomePage() {
           ))}
         </div>
       </main>
+
+      <AuthModal open={authMode !== null} onClose={() => setAuthMode(null)}>
+        {authMode === 'login' && (
+          <LoginForm
+            onSuccess={handleAuthSuccess}
+            switchElement={
+              <button
+                type="button"
+                onClick={() => setAuthMode('register')}
+                className="cursor-pointer font-medium text-emerald-600 transition-colors hover:text-emerald-700 hover:underline"
+              >
+                Registrati
+              </button>
+            }
+          />
+        )}
+        {authMode === 'register' && (
+          <RegisterForm
+            onSuccess={handleAuthSuccess}
+            switchElement={
+              <button
+                type="button"
+                onClick={() => setAuthMode('login')}
+                className="cursor-pointer font-medium text-emerald-600 transition-colors hover:text-emerald-700 hover:underline"
+              >
+                Accedi
+              </button>
+            }
+          />
+        )}
+      </AuthModal>
     </div>
   )
 }
