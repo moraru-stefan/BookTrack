@@ -26,13 +26,13 @@ export function AuthModal({ open, onClose, children }: AuthModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm animate-[modal-backdrop-in_150ms_ease-out]"
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-modal="true"
-        className="relative w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl"
+        className="relative w-full max-w-sm animate-[modal-content-in_180ms_ease-out] rounded-2xl bg-white p-8 shadow-xl"
         onClick={(event) => event.stopPropagation()}
       >
         <button

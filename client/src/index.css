@@ -9,3 +9,19 @@
   max-width: 1600px;
   margin-inline: auto;
 }
+
+/* Animazioni di apertura per modali (sfondo che sfuma, contenuto che
+   appare con una leggera scala) — usate via Tailwind con
+   animate-[modal-backdrop-in_...]/animate-[modal-content-in_...]. */
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-content-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+}

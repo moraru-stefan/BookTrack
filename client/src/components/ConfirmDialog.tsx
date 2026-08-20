@@ -40,14 +40,14 @@ export function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm animate-[modal-backdrop-in_150ms_ease-out]"
       onClick={onCancel}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
-        className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl"
+        className="w-full max-w-sm animate-[modal-content-in_180ms_ease-out] rounded-2xl bg-white p-6 shadow-xl"
         onClick={(event) => event.stopPropagation()}
       >
         <h2 id="confirm-dialog-title" className="text-lg font-semibold text-slate-900">
